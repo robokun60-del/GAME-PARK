@@ -24,6 +24,57 @@
   /* best.order … 'desc': 大きいほど良い / 'asc': 小さいほど良い */
   GP.games = [
     {
+      id: 'star-blaster',
+      title: 'スター・ブラスター',
+      description: '宇宙からやってくるカラフルなモンスターを撃ちまくれ！⭐で3way弾、💖でライフ回復。どこまでレベルを上げられる？',
+      image: 'assets/images/star-blaster.svg',
+      category: 'shooting',
+      featured: true,
+      releasedAt: '2026-11-25',
+      keywords: 'すたーぶらすたー シューティング 宇宙 うちゅう 弾幕 STG',
+      best: { order: 'desc', unit: '点', label: 'ハイスコア' },
+      howto: [
+        '画面をドラッグ(PCは矢印キー/WASD)で自機を移動。弾は自動で発射されます。',
+        '敵を倒すと得点。1500点ごとにレベルアップして敵が強くなります。',
+        '⭐を取ると8秒間3way弾、💖でライフが1回復。',
+        '敵や敵の弾に当たるとライフが減り、0になるとゲームオーバー。Pキーで一時停止。'
+      ]
+    },
+    {
+      id: 'candy-merge',
+      title: 'キャンディ・マージ',
+      description: '同じお菓子をぶつけて合体！🍬が🍭、🍪…とどんどん進化。盤面がいっぱいになる前に👑の王冠スイーツを目指そう。',
+      image: 'assets/images/candy-merge.svg',
+      category: 'puzzle',
+      featured: true,
+      releasedAt: '2026-11-25',
+      keywords: 'きゃんでぃまーじ 合体 がったい スワイプ お菓子 おかし 数字 パズル',
+      best: { order: 'desc', unit: '点', label: 'ハイスコア' },
+      howto: [
+        'スワイプ(PCは矢印キー/WASD)で、全部のお菓子を同じ方向にスライド。',
+        '同じお菓子どうしがぶつかると合体して1段階進化します。',
+        '動かすたびに新しいお菓子が1つ出現。',
+        '👑(レベル11)を作ればクリア！動かせなくなったら終了です。'
+      ]
+    },
+    {
+      id: 'pop-racer',
+      title: 'ポップレーサー',
+      description: '3車線の道路をかっ飛ばせ！前の車やコーンをよけて、コインを集めながらどこまで走れるかに挑戦。',
+      image: 'assets/images/pop-racer.svg',
+      category: 'race',
+      featured: false,
+      releasedAt: '2026-11-25',
+      keywords: 'ぽっぷれーさー レース 車 くるま ドライブ よけ',
+      best: { order: 'desc', unit: '点', label: 'ハイスコア' },
+      howto: [
+        '画面の左右をタップ、またはスワイプ(PCは←→キー)で車線を変更。',
+        '前を走る車やコーンにぶつかるとクラッシュでゲーム終了。',
+        '🪙コインは1枚50点。走った距離(m)もそのまま得点になります。',
+        'だんだんスピードアップ！Pキーで一時停止。'
+      ]
+    },
+    {
       id: 'reaction',
       title: '反射神経チャレンジ',
       description: 'ランダムなタイミングで現れるターゲットを素早くタップ。5ラウンドの反応速度でスコアを競おう。',

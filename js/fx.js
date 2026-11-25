@@ -74,4 +74,61 @@
       setTimeout(function () { layer.remove(); }, 1800);
     }
   };
+
+  /* キャンバス型ゲームの共通部品
+   * GP.canvasGame(root, W, H) → { canvas, ctx, overlay, local(e), start(step), stop(), destroy() }
+   * step(dt) は毎フレーム呼ばれ、false を返すとループが止まる */
+  GP.canvasGame = function (root, W, H) {
+    var wrap = document.createElement('div');
+    wrap.className = 'cv-wrap';
+    wrap.innerHTML = '<canvas class="cv"></canvas><div class="cv-overlay"></div>';
+    root.appendChild(wrap);
+    var canvas = wrap.firstChild, overlay = wrap.lastChild;
+    var ctx = canvas.getContext('2d');
+    if (!ctx.roundRect) { /* 古いブラウザ向け */
+      ctx.roundRect = function (x, y, w, h, r) {
+        r = Math.min(r, w / 2, h / 2);
+        this.moveTo(x + r, y); this.arcTo(x + w, y, x + w, y + h, r); this.arcTo(x + w, y + h, x, y + h, r);
+        this.arcTo(x, y + h, x, y, r); this.arcTo(x, y, x + w, y, r); this.closePath();
+      };
+    }
+    var raf = 0, last = 0, stepFn = null, running = false;
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function frame(t) {
+      if (!running) return;
+      var dt = Math.min(0.05, (t - last) / 1000 || 0);
+      last = t;
+      if (stepFn(dt) === false) { running = false; return; }
+      raf = requestAnimationFrame(frame);
+    }
+    function onVis() { if (document.hidden && running) api.onHide && api.onHide(); }
+    resize();
+    window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', onVis);
+
+    var api = {
+      W: W, H: H, wrap: wrap, canvas: canvas, ctx: ctx, overlay: overlay, onHide: null,
+      local: function (e) {
+        var r = canvas.getBoundingClientRect();
+        return { x: (e.clientX - r.left) * W / r.width, y: (e.clientY - r.top) * H / r.height };
+      },
+      start: function (step) {
+        stepFn = step; running = true; last = performance.now();
+        cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
+      },
+      stop: function () { running = false; cancelAnimationFrame(raf); },
+      isRunning: function () { return running; },
+      destroy: function () {
+        api.stop();
+        window.removeEventListener('resize', resize);
+        document.removeEventListener('visibilitychange', onVis);
+      }
+    };
+    return api;
+  };
 })();
