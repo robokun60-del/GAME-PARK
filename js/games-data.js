@@ -24,6 +24,24 @@
   /* best.order … 'desc': 大きいほど良い / 'asc': 小さいほど良い */
   GP.games = [
     {
+      id: 'sky-athletic',
+      title: 'スカイ・アスレチック',
+      description: 'GAME PARK初の3Dゲーム！空に浮かぶアスレチックコースを走ってジャンプ。動く足場や落ちる床、ぐるぐるバーを越えてゴールを目指そう。',
+      image: 'assets/images/sky-athletic.svg',
+      category: 'adventure',
+      featured: true,
+      is3d: true,
+      releasedAt: '2026-11-25',
+      keywords: 'すかいあすれちっく 3D アスレチック ジャンプ アクション 障害物 パルクール',
+      best: { order: 'asc', unit: '秒', label: '最速タイム' },
+      howto: [
+        'PC: WASD/矢印キーで移動、スペースでジャンプ、マウスドラッグ(またはQ/E)で視点を回転。',
+        'スマホ: 左下のスティックで移動、右下のJUMPでジャンプ、画面をドラッグで視点を回転。',
+        '落ちても🚩チェックポイントから再スタート。動く足場・落ちる床・ぐるぐるバーに注意！',
+        '🏁ゴールまでのタイムを競おう。右上の「全画面」で大きく遊べます。'
+      ]
+    },
+    {
       id: 'star-blaster',
       title: 'スター・ブラスター',
       description: '宇宙からやってくるカラフルなモンスターを撃ちまくれ！⭐で3way弾、💖でライフ回復。どこまでレベルを上げられる？',

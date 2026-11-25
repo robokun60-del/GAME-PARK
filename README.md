@@ -13,6 +13,7 @@ HTML / CSS / JavaScript のみで作られた静的サイトで、GitHub Pages �
 | キャンディ・マージ | パズル | ハイスコア(高いほど良い) |
 | スター・ブラスター | シューティング | ハイスコア(高いほど良い) |
 | ポップレーサー | レース | ハイスコア(高いほど良い) |
+| スカイ・アスレチック (3D) | アドベンチャー | 最速タイム(少ないほど良い) |
 
 ## ファイル構成
 
@@ -34,7 +35,9 @@ gamepark/
 │       ├── slide-puzzle.js … スライドパズル
 │       ├── candy-merge.js  … キャンディ・マージ
 │       ├── star-blaster.js … スター・ブラスター
-│       └── pop-racer.js    … ポップレーサー
+│       ├── pop-racer.js    … ポップレーサー
+│       └── sky-athletic.js … スカイ・アスレチック (3D)
+│   └── vendor/three.min.js … Three.js r128 (MIT, 3Dゲームを開いたときだけ読み込み)
 └── assets/images/          … オリジナルSVG素材(サムネイル・favicon)
 ```
 
