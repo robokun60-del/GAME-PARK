@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GAME PARK | 無料で遊べるブラウザゲームセンター</title>
 <meta name="description" content="GAME PARKは、登録不要・完全無料で遊べるオリジナルブラウザゲームセンターです。スマホでもPCでも、すぐに遊べます。">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#ffc93c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap">
 <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,11 +19,11 @@
   <div class="container header-inner">
     <a class="logo" href="#home" aria-label="GAME PARK ホーム">
       <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
-        <rect width="40" height="40" rx="12" fill="#1463ff"/>
-        <path d="M12 16.5h3.5V13h3v3.5H22v3h-3.5V23h-3v-3.5H12z" fill="#fff"/>
-        <circle cx="27" cy="15.5" r="2.2" fill="#fff"/>
-        <circle cx="30" cy="21.5" r="2.2" fill="#9cc2ff"/>
-        <path d="M11 29h18" stroke="#9cc2ff" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="1.5" y="1.5" width="37" height="37" rx="12" fill="#ff5c8a" stroke="#2b2350" stroke-width="3"/>
+        <path d="M10 17h3.5v-3.5h3V17H20v3h-3.5v3.5h-3V20H10z" fill="#fff" stroke="#2b2350" stroke-width="1.2" stroke-linejoin="round"/>
+        <circle cx="27" cy="15.5" r="2.6" fill="#ffc93c" stroke="#2b2350" stroke-width="1.2"/>
+        <circle cx="30" cy="22" r="2.6" fill="#3ddc97" stroke="#2b2350" stroke-width="1.2"/>
+        <path d="M11 29.5h18" stroke="#2b2350" stroke-width="3" stroke-linecap="round"/>
       </svg>
       <span class="logo-text">GAME <b>PARK</b></span>
     </a>
@@ -47,6 +50,8 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.500 4.500"/></svg>
       <input id="search-input" type="search" placeholder="ゲームを検索" aria-label="ゲームを検索" autocomplete="off" enterkeyhint="search">
     </form>
+
+    <button type="button" class="sound-toggle" id="sound-toggle" aria-pressed="true" aria-label="効果音">🔊</button>
   </div>
 </header>
 
@@ -77,6 +82,7 @@
 </footer>
 
 <script src="js/storage.js"></script>
+<script src="js/fx.js"></script>
 <script src="js/games-data.js"></script>
 <script src="js/games/reaction.js"></script>
 <script src="js/games/number-guess.js"></script>

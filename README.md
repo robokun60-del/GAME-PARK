@@ -22,6 +22,7 @@ gamepark/
 │   └── style.css           … デザイン全体(レスポンシブ対応)
 ├── js/
 │   ├── storage.js          … localStorage 保存(お気に入り・履歴・ベスト・プレイ回数)
+│   ├── fx.js               … 演出(紙吹雪・効果音)
 │   ├── games-data.js       … ゲーム／カテゴリーの登録データ
 │   ├── app.js              … 画面描画・ルーティング・検索
 │   └── games/
