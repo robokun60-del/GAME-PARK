@@ -41,6 +41,52 @@
     });
   }
 
+  /* ---------- 全画面 ---------- */
+  var FS_ICON = '<svg class="fs-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg>';
+  function fsElement() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+  function isFs() { var sh = document.getElementById('stage-shell'); return !!(sh && sh.classList.contains('is-fullscreen')); }
+  function syncFs() {
+    var sh = document.getElementById('stage-shell'), btn = document.getElementById('fs-btn');
+    if (!sh || !btn) return;
+    var on = sh.classList.contains('is-fullscreen');
+    btn.setAttribute('aria-pressed', String(on));
+    btn.lastChild.textContent = on ? '全画面をやめる' : '全画面';
+    document.documentElement.classList.toggle('fs-lock', on);
+  }
+  function enterFs() {
+    var sh = document.getElementById('stage-shell');
+    if (!sh) return;
+    var req = sh.requestFullscreen || sh.webkitRequestFullscreen;
+    sh.classList.add('is-fullscreen');
+    if (req) {
+      try {
+        var pr = req.call(sh);
+        if (pr && pr.catch) pr.catch(function () { sh.classList.add('is-pseudo'); syncFs(); });
+      } catch (e) { sh.classList.add('is-pseudo'); }
+    } else {
+      /* iPhone など全画面APIがない端末では画面いっぱいに広げて代用 */
+      sh.classList.add('is-pseudo');
+    }
+    syncFs();
+  }
+  function exitFs() {
+    var sh = document.getElementById('stage-shell');
+    if (fsElement()) {
+      var ex = document.exitFullscreen || document.webkitExitFullscreen;
+      if (ex) { try { var pr = ex.call(document); if (pr && pr.catch) pr.catch(function () {}); } catch (e) { /* noop */ } }
+    }
+    if (sh) sh.classList.remove('is-fullscreen', 'is-pseudo');
+    document.documentElement.classList.remove('fs-lock');
+    syncFs();
+  }
+  function onFsChange() {
+    var sh = document.getElementById('stage-shell');
+    if (sh && !fsElement() && !sh.classList.contains('is-pseudo')) { sh.classList.remove('is-fullscreen'); syncFs(); }
+  }
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isFs()) exitFs(); });
+
   /* ---------- templates ---------- */
   var HEART = '<path d="M12 20s-7.500-4.400-7.500-10A4.300 4.300 0 0 1 12 7.400 4.300 4.300 0 0 1 19.500 10c0 5.600-7.500 10-7.500 10z"/>';
 
@@ -54,7 +100,7 @@
     return '<article class="card">' +
       '<a class="card-link" href="#game-' + esc(game.id) + '">' +
         '<div class="card-media"><img src="' + esc(game.image) + '" alt="" width="640" height="400" loading="lazy" decoding="async">' +
-          (isNew(game) ? '<span class="badge">NEW</span>' : '') + '</div>' +
+          (isNew(game) ? '<span class="badge">NEW</span>' : '') + (game.is3d ? '<span class="badge badge-3d">3D</span>' : '') + '</div>' +
         '<div class="card-body">' +
           '<span class="chip">' + esc(catName(game)) + '</span>' +
           '<h3>' + esc(game.title) + '</h3>' +
@@ -66,7 +112,7 @@
   function featureCard(game) {
     return '<article class="feature">' +
       '<a class="feature-link" href="#game-' + esc(game.id) + '">' +
-        '<div class="feature-media"><img src="' + esc(game.image) + '" alt="" width="640" height="400" decoding="async"></div>' +
+        '<div class="feature-media"><img src="' + esc(game.image) + '" alt="" width="640" height="400" decoding="async">' + (game.is3d ? '<span class="badge badge-3d">3D</span>' : '') + '</div>' +
         '<div class="feature-body">' +
           '<span class="chip">' + esc(catName(game)) + '</span>' +
           '<h3>' + esc(game.title) + '</h3>' +
@@ -176,7 +222,11 @@
         '<a class="chip" href="#category-' + esc(game.category) + '">' + esc(catName(game)) + '</a>' +
         '<h1>' + esc(game.title) + '</h1><p>' + esc(game.description) + '</p></div>' + favBtn(game, true) + '</header>' +
       '<div class="game-layout">' +
-        '<section class="stage" id="stage" aria-label="' + esc(game.title) + ' ゲーム画面"></section>' +
+        '<div class="stage-shell" id="stage-shell">' +
+          '<div class="stage-bar"><span class="stage-title">' + esc(game.title) + '</span>' +
+          '<button type="button" class="btn btn-ghost btn-sm fs-btn" id="fs-btn" aria-pressed="false">' + FS_ICON + '<span>全画面</span></button></div>' +
+          '<section class="stage" id="stage" aria-label="' + esc(game.title) + ' ゲーム画面"></section>' +
+        '</div>' +
         '<aside class="game-side">' +
           '<dl class="stats"><div><dt>' + esc(game.best.label) + '</dt><dd id="stat-best">' + fmtBest(game) + '</dd></div>' +
           '<div><dt>プレイ回数</dt><dd id="stat-plays">' + store.getPlays(game.id) + '回</dd></div></dl>' +
@@ -230,6 +280,7 @@
     });
   }
   function render(animate) {
+    if (isFs()) exitFs();
     if (unmountGame) { try { unmountGame(); } catch (e) { /* noop */ } unmountGame = null; }
     var title = 'GAME PARK | 無料で遊べるブラウザゲームセンター';
     var game = null;
@@ -289,6 +340,10 @@
         render(false);
         window.scrollTo(0, y);
       }
+      return;
+    }
+    if (e.target.closest('#fs-btn')) {
+      if (isFs()) exitFs(); else enterFs();
       return;
     }
     if (e.target.closest('[data-clear-search]')) {

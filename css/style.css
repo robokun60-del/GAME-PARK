@@ -493,6 +493,64 @@ main { min-height: 70vh; padding: 36px 0 80px; }
 .cv-best { color: var(--muted); font-size: 12px; font-weight: 800; }
 .cv-card .result-value { font-size: 46px; }
 
+/* ---------- fullscreen ---------- */
+.stage-shell { min-width: 0; }
+.stage-bar { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 12px; }
+.stage-title { display: none; margin-right: auto; font-size: 18px; font-weight: 900; }
+.fs-icon { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.stage-shell.is-fullscreen {
+  display: flex; flex-direction: column; width: 100%; height: 100%; padding: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  background-color: var(--bg); overflow: auto;
+}
+.stage-shell.is-pseudo { position: fixed; inset: 0; z-index: 300; height: 100vh; height: 100dvh; }
+.stage-shell.is-fullscreen .stage-title { display: block; }
+.stage-shell.is-fullscreen .stage-bar { margin-bottom: 10px; }
+.stage-shell.is-fullscreen .stage { flex: 1; display: flex; flex-direction: column; min-height: 0; box-shadow: var(--pop); }
+.stage-shell.is-fullscreen .cv-wrap { width: min(100%, calc((100vh - 190px) * 2 / 3)); width: min(100%, calc((100dvh - 190px) * 2 / 3)); }
+.stage-shell.is-fullscreen .cm-board, .stage-shell.is-fullscreen .sp-board { width: min(100%, calc(100vh - 260px), 600px); }
+.stage-shell.is-fullscreen .ath-wrap { flex: 1; aspect-ratio: auto; height: auto; min-height: 260px; max-height: none; }
+.stage-shell.is-fullscreen .rx-arena { height: calc(100vh - 230px); }
+html.fs-lock, html.fs-lock body { overflow: hidden; }
+.badge-3d { left: auto; right: 62px; background: var(--purple); color: #fff; animation-delay: -.8s; }
+.feature-media { position: relative; }
+.feature-media .badge-3d { left: 12px; right: auto; }
+
+/* ---------- 3D athletic ---------- */
+.ath-wrap {
+  position: relative; width: 100%; aspect-ratio: 16 / 10; max-height: 72vh; border: var(--border); border-radius: 22px; overflow: hidden;
+  background: #9fdcff; box-shadow: var(--pop); user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.ath-view { position: absolute; inset: 0; touch-action: none; cursor: grab; }
+.ath-view:active { cursor: grabbing; }
+.ath-view canvas { display: block; width: 100% !important; height: 100% !important; }
+.ath-pad, .ath-jump { display: none; }
+@media (hover: none), (pointer: coarse) {
+  .ath-pad {
+    position: absolute; left: 16px; bottom: 16px; z-index: 3; display: grid; place-items: center; width: 128px; height: 128px;
+    border: 3px solid rgba(43, 35, 80, .6); border-radius: 50%; background: rgba(255, 255, 255, .35); touch-action: none;
+  }
+  .ath-stick { width: 56px; height: 56px; border: var(--border); border-radius: 50%; background: #fff; box-shadow: 0 3px 0 var(--line); pointer-events: none; }
+  .ath-jump {
+    position: absolute; right: 18px; bottom: 26px; z-index: 3; display: grid; place-items: center; width: 92px; height: 92px; padding: 0;
+    border: var(--border); border-radius: 50%; background: var(--pink); color: #fff; box-shadow: 0 5px 0 var(--line);
+    font-size: 17px; font-weight: 900; touch-action: none;
+  }
+  .ath-jump:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--line); }
+}
+.ath-toast {
+  position: absolute; left: 50%; top: 14px; z-index: 4; padding: 6px 18px; border: var(--border); border-radius: 999px; background: #fff;
+  box-shadow: 0 3px 0 var(--line); font-size: 15px; font-weight: 900; white-space: nowrap; opacity: 0; transform: translate(-50%, -10px); pointer-events: none;
+  transition: opacity .2s, transform .2s;
+}
+.ath-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+.ath-wrap .cv-overlay { z-index: 5; overflow-y: auto; }
+.cv-overlay > .cv-card { margin: auto; }
+@media (max-width: 560px) { .cv-card { padding: 16px 14px; gap: 6px; } .cv-emoji { font-size: 40px; } .cv-title { font-size: 19px; } .cv-card .result-value { font-size: 40px; } }
+@media (max-width: 560px) {
+  .ath-wrap { aspect-ratio: 3 / 4; }
+  .stage-shell.is-fullscreen .ath-wrap { aspect-ratio: auto; }
+}
+
 /* ---------- confetti ---------- */
 .confetti { position: fixed; inset: 0; z-index: 200; pointer-events: none; overflow: hidden; }
 .confetti i {
