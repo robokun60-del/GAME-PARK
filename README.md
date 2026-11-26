@@ -14,6 +14,7 @@ HTML / CSS / JavaScript のみで作られた静的サイトで、GitHub Pages �
 | スター・ブラスター | シューティング | ハイスコア(高いほど良い) |
 | ポップレーサー | レース | ハイスコア(高いほど良い) |
 | スカイ・アスレチック (3D) | アドベンチャー | 最速タイム(少ないほど良い) |
+| ストームドロップ (3D) | シューティング | 最高順位(小さいほど良い) |
 
 ## ファイル構成
 
@@ -37,7 +38,9 @@ gamepark/
 │       ├── star-blaster.js … スター・ブラスター
 │       ├── pop-racer.js    … ポップレーサー
 │       └── sky-athletic.js … スカイ・アスレチック (3D)
+│   ├── games/storm-drop.js … ストームドロップを iframe で読み込む部品
 │   └── vendor/three.min.js … Three.js r128 (MIT, 3Dゲームを開いたときだけ読み込み)
+├── games/storm-drop/index.html … ストームドロップ本体 (単体でも遊べるページ)
 └── assets/images/          … オリジナルSVG素材(サムネイル・favicon)
 ```
 

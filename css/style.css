@@ -551,6 +551,28 @@ html.fs-lock, html.fs-lock body { overflow: hidden; }
   .stage-shell.is-fullscreen .ath-wrap { aspect-ratio: auto; }
 }
 
+/* ---------- storm drop (iframe game) ---------- */
+.sd-poster { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 20px; }
+.sd-poster img { width: 100%; border: var(--border); border-radius: 20px; box-shadow: var(--pop); }
+.sd-poster-body { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.sd-tag { padding: 2px 12px; border: 2px solid var(--line); border-radius: 999px; background: var(--purple); color: #fff; font-size: 12px; font-weight: 900; }
+.sd-note, .sd-best { color: var(--muted); font-size: 13px; font-weight: 800; }
+.sd-best b { color: var(--ink); }
+.sd-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border: var(--border); border-radius: 18px; overflow: hidden; background: #0d1240; box-shadow: var(--pop); }
+.sd-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.stage-shell.is-immersive.is-fullscreen { padding: 0; background: #0d1240; }
+.stage-shell.is-immersive.is-fullscreen .stage-bar { position: absolute; left: 50%; bottom: 4px; z-index: 10; margin: 0; transform: translateX(-50%); }
+.stage-shell.is-immersive.is-fullscreen .stage-title { display: none; }
+.stage-shell.is-immersive.is-fullscreen .fs-btn { min-height: 30px; padding: 0 12px; font-size: 12px; background: rgba(255, 255, 255, .85); box-shadow: 0 2px 0 var(--line); }
+.stage-shell.is-immersive.is-fullscreen .stage { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: #0d1240; }
+.stage-shell.is-immersive.is-fullscreen .sd-frame { flex: 1; aspect-ratio: auto; border: 0; border-radius: 0; box-shadow: none; }
+.stage-shell.is-immersive.is-fullscreen .sd-poster { margin: auto; padding: 16px; }
+@media (max-width: 560px) {
+  .sd-poster { grid-template-columns: minmax(0, 1fr); }
+  .sd-poster-body { align-items: stretch; text-align: center; }
+  .sd-tag { align-self: center; }
+}
+
 /* ---------- confetti ---------- */
 .confetti { position: fixed; inset: 0; z-index: 200; pointer-events: none; overflow: hidden; }
 .confetti i {
