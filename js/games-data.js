@@ -24,6 +24,25 @@
   /* best.order … 'desc': 大きいほど良い / 'asc': 小さいほど良い */
   GP.games = [
     {
+      id: 'storm-drop',
+      title: 'ストームドロップ',
+      description: '空から島に飛び降りて、最後の1人を目指す3Dバトルロイヤル！武器を拾い、壁や坂を建築してしのぎ、せまるストームから逃げきろう。',
+      image: 'assets/images/storm-drop.svg',
+      category: 'shooting',
+      featured: true,
+      is3d: true,
+      immersive: true,
+      releasedAt: '2026-11-26',
+      keywords: 'すとーむどろっぷ バトルロイヤル 3D シューティング 建築 けんちく TPS ボット',
+      best: { order: 'asc', unit: '位', label: '最高順位' },
+      howto: [
+        '「横画面でプレイ」を押すと全画面で始まります。スマホは横向きにして遊んでね。',
+        'PC: WASDで移動、マウスで視点、左クリックで撃つ、Qで建築モード、Spaceでジャンプ/飛び降り。',
+        'スマホ: 左側をドラッグで移動、右側をドラッグで視点、画面のボタンで撃つ・ジャンプ・建築。',
+        'ストームの外にいるとダメージ！安全地帯に移動しながら最後の1人を目指そう。'
+      ]
+    },
+    {
       id: 'sky-athletic',
       title: 'スカイ・アスレチック',
       description: 'GAME PARK初の3Dゲーム！空に浮かぶアスレチックコースを走ってジャンプ。動く足場や落ちる床、ぐるぐるバーを越えてゴールを目指そう。',

@@ -53,14 +53,22 @@
     btn.lastChild.textContent = on ? '全画面をやめる' : '全画面';
     document.documentElement.classList.toggle('fs-lock', on);
   }
-  function enterFs() {
+  function lockLandscape() {
+    try {
+      var o = screen.orientation;
+      if (o && o.lock) { var p = o.lock('landscape'); if (p && p.catch) p.catch(function () {}); }
+    } catch (e) { /* 対応していない端末では何もしない */ }
+  }
+  function enterFs(opts) {
     var sh = document.getElementById('stage-shell');
     if (!sh) return;
+    var land = opts && opts.landscape;
     var req = sh.requestFullscreen || sh.webkitRequestFullscreen;
     sh.classList.add('is-fullscreen');
     if (req) {
       try {
         var pr = req.call(sh);
+        if (pr && pr.then) pr.then(function () { if (land) lockLandscape(); });
         if (pr && pr.catch) pr.catch(function () { sh.classList.add('is-pseudo'); syncFs(); });
       } catch (e) { sh.classList.add('is-pseudo'); }
     } else {
@@ -71,6 +79,7 @@
   }
   function exitFs() {
     var sh = document.getElementById('stage-shell');
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (e) { /* noop */ }
     if (fsElement()) {
       var ex = document.exitFullscreen || document.webkitExitFullscreen;
       if (ex) { try { var pr = ex.call(document); if (pr && pr.catch) pr.catch(function () {}); } catch (e) { /* noop */ } }
@@ -83,6 +92,7 @@
     var sh = document.getElementById('stage-shell');
     if (sh && !fsElement() && !sh.classList.contains('is-pseudo')) { sh.classList.remove('is-fullscreen'); syncFs(); }
   }
+  GP.fullscreen = { enter: enterFs, exit: exitFs, isOn: isFs };
   document.addEventListener('fullscreenchange', onFsChange);
   document.addEventListener('webkitfullscreenchange', onFsChange);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isFs()) exitFs(); });
@@ -222,7 +232,7 @@
         '<a class="chip" href="#category-' + esc(game.category) + '">' + esc(catName(game)) + '</a>' +
         '<h1>' + esc(game.title) + '</h1><p>' + esc(game.description) + '</p></div>' + favBtn(game, true) + '</header>' +
       '<div class="game-layout">' +
-        '<div class="stage-shell" id="stage-shell">' +
+        '<div class="stage-shell' + (game.immersive ? ' is-immersive' : '') + '" id="stage-shell">' +
           '<div class="stage-bar"><span class="stage-title">' + esc(game.title) + '</span>' +
           '<button type="button" class="btn btn-ghost btn-sm fs-btn" id="fs-btn" aria-pressed="false">' + FS_ICON + '<span>全画面</span></button></div>' +
           '<section class="stage" id="stage" aria-label="' + esc(game.title) + ' ゲーム画面"></section>' +
